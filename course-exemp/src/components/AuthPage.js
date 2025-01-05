@@ -1,6 +1,7 @@
 // AuthPage.js
 import React from 'react';
-import { GoogleLogin } from '@react-oauth/google';
+import {GoogleLogin} from '@react-oauth/google';
+import {jwtDecode} from 'jwt-decode';
 import './AuthPage.css';
 
 function AuthPage({ onLoginSuccess, onLoginFailure }) {
@@ -9,10 +10,26 @@ function AuthPage({ onLoginSuccess, onLoginFailure }) {
       <div className="auth-container">
         <img className ='bitlogo' src='../../login-logo-dark-mode.png' alt="BITSathy Logo" />
         <h1>Welcome to One Credit Course Exemption</h1>
-        {/* <p>Log in to manage your course exemption requests easily.</p> */}
         <div className="auth-login-button">
           <GoogleLogin
-            onSuccess={onLoginSuccess}
+            onSuccess={(response) => {
+              try {
+              const decodedToken = jwtDecode(response.credential);
+                // console.log('Decoded token:', decodedToken);
+              
+              const  email  = decodedToken.email; // Extract email from the response
+              if (email === 'ranjith.mc22@bitsathy.ac.in') {
+                // Call admin-specific handler
+                onLoginSuccess(decodedToken, true);
+              } else {
+                // Call student-specific handler
+                onLoginSuccess(decodedToken, false);
+              }
+            } catch (error) {
+              console.error('Error decoding token:', error);
+              onLoginFailure(error);
+            }}
+          }
             onError={onLoginFailure}
             useOneTap
             render={(renderProps) => (

@@ -1,0 +1,146 @@
+/* Main container */
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    width: 255px;
+    background-color: #3e3c3c;
+    color: white;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  .sidebar h2 {
+    text-align: left;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 15px 0;
+  }
+  
+  .sidebar ul li button {
+    color: white;
+    background: none;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .sidebar ul li button:hover {
+    background-color: #b59696;
+    border-radius: 5px;
+  }
+  
+  /* Main content styles */
+  .main-content {
+    margin-left: 250px;
+    padding: 20px;
+    background-color: #ffffff;
+  }
+  
+  h1 {
+    font-size: 2em;
+    color: #007BFF;
+  }
+  
+  /* Exemption request list styles */
+  .exemption-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .student-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Align content vertically */
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Ensure card uses full available width */
+    max-width: 600px; /* Limit the width to prevent it from expanding too much */
+    margin: 0 auto; /* Center the card */
+  }
+  
+  .student-card p {
+    margin: 5px 0;
+    display: inline-block;
+    width: 30%; /* Adjust width so the text doesn't overflow */
+    text-align: center; /* Center-align the text */
+    /* overflow: hidden; Hide any overflow if the text is too long */
+    /* text-overflow: ellipsis; Add ellipsis if the text overflows */
+    /* white-space: nowrap; Prevent the text from wrapping */
+  }
+  
+  .student-card button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 45%;
+    margin: 10px 5px;
+    /* text-align: center; Ensure text is centered in the button */
+  }
+  
+  .student-card button.Approve:hover {
+    background-color: #4f9c47;
+  }
+    
+  
+  .student-card button.Reject:hover {
+    background-color: #be472c;
+  }
+  
+  /* Pagination controls */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+  }
+  
+  .pagination button.disabled {
+    background-color: #b0b0b0;
+    cursor: not-allowed;
+  }
+  
+  .pagination button:hover:not(.disabled) {
+    background-color: #0056b3;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+  }
+  

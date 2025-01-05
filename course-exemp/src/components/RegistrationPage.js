@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RegistrationPage.module.css'; // Reuse the same styles for consistency
+import './RegistrationPage.css'; // Reuse the same styles for consistency
 
 function RegistrationPage() {
     const navigate = useNavigate(); // Initialize the navigate function for logout
@@ -34,7 +34,7 @@ function RegistrationPage() {
       {/* Main Content Section */}
       <div className="main-content">
         <h1>Registration Form</h1>
-        <form className="exemption-form">
+        <form className="registration-form">
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input type="text" id="name" placeholder="Enter your name" />
@@ -53,7 +53,19 @@ function RegistrationPage() {
               <option value="civil">Civil</option>
             </select>
           </div>
-          <button className='register' type="submit">Submit</button>
+          <div className='semester'>
+            <label htmlFor="semester">Semester</label>
+            <select id="semester">
+              <option value="1">Semester 3</option>
+              <option value="2">Semester 4</option>
+              <option value="3">Semester 5</option>
+              <option value="4">Semester 6</option>
+            </select>            
+          </div>
+          <div className='done'>
+          <button className='register' type="submit">Register</button>
+          <button className='cancel' type="reset">Cancel</button>
+          </div>        
         </form>
       </div>
     </div>

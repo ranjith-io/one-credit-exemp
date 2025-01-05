@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import navigate hook for redirecting
 import './StartPage.css'; // Add styles in this file
 
 function StartPage() {
-  const [firstName, setFirstName] = useState('');
-  const [rollNumber, setRollNumber] = useState('');
+  // const [firstName, setFirstName] = useState('');
+  // const [rollNumber, setRollNumber] = useState('');
   const navigate = useNavigate(); // Initialize the navigate function for logout
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Submitted:', { firstName, rollNumber });
-    setFirstName('');
-    setRollNumber('');
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log('Submitted:', { firstName, rollNumber });
+  //   setFirstName('');
+  //   setRollNumber('');
+  // };
 
   const handlelogin =(e) => {
     navigate('/start');
@@ -43,10 +43,12 @@ function StartPage() {
       </div>
 
       {/* Main Content Section */}
+      {/* <h1>One Credit ourse Exemption</h1> */}
+
       <div className="main-content">
-        <h1>One Credit Course Exemption</h1>
         <form className="exemption-form">
           {/* Basic Information Section */}
+          <div className='Student'>
           <h2>Student details</h2>
           <div className="form-group">
             <label htmlFor="firstName">First Name</label>
@@ -55,6 +57,7 @@ function StartPage() {
           <div className="form-group">
             <label htmlFor="rollNumber">Roll Number</label>
             <input type="text" id="rollNumber" placeholder="Ex: 7376221MC137" />
+          </div>
           </div>
 
           {/* One Credit Course Details */}
@@ -90,7 +93,10 @@ function StartPage() {
             <input type="text" id="thirdCourseCode" placeholder="Course code" />
           </div>
 
-          <button className='register' type="submit">Submit</button>
+          <div className='done'>
+          <button className='submit' type="submit">Submit</button>
+          <button className='cancel' type="reset">Cancel</button>       
+          </div>        
         </form>
       </div>
     </div>

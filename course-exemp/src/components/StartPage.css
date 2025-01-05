@@ -3,11 +3,15 @@
     display: flex;
     height: 100vh;
   }
+ 
+  /* .Student{
+    background-color: blue;
+  } */
   
   /* Sidebar Styles */
   .sidebar {
     width: 255px;
-    background-color: #3e3c3c;
+    background-color: #3d5288;
     color: white;
     padding: 20px;
     box-sizing: border-box;
@@ -48,8 +52,9 @@
   
   .sidebar ul li a:hover,
   .sidebar ul li button:hover {
-    background-color: #b59696;
+    background-color: #cd2d2d;
     border-radius: 5px;
+    
   }
   
   /* Main Content Styles */
@@ -57,7 +62,7 @@
     margin:10 0 10 0;
     margin-left: 250px; /* Add margin to ensure the main content is not hidden behind the sidebar */
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #a82727;
     overflow-y: auto;
     border-radius: 2px;
   }
@@ -77,7 +82,8 @@
     display: flex;
     flex-direction: column;
     width: 500px;
-    margin: 0 auto;
+    margin: 0 0;
+    justify-content: center;
   }
   
   .form-group {
@@ -101,18 +107,43 @@
     width: 90%;
   }
   
-  button {
+  /* button {
     padding: 10px 20px;
     font-size: 1.1em;
     background-color: #e69131;
-    color: white;
+    color: rgb(185, 24, 24);
     border: none;
     border-radius: 5px;
     cursor: pointer;
     width: 95%;
-  }
+  } */
 
-.register:hover {
-    background-color: #4ba435;
+
+.exemption-form button:hover {
+    background-color: #4f9c47;
   }
+.done{
+  margin-top:20px;
+  display:flex;
+  flex-direction: row;
+  justify-content: right;
+}
+button.submit{
+  /* margin-top: auto; */
+  padding: 10px 20px;
+  margin-left :50px;
+  margin-right:0px;
+  width:90px;
+}
+button.submit:hover {
+  background-color: #4f9c47;
+}
+button.cancel{
+  width:90px;
+  padding: 10px 20px;
+}
+button.cancel:hover {
+  background-color: #a34141;
+}
+
   

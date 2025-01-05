@@ -1,8 +1,9 @@
 /* Container for the sidebar and main content */
-.container {
-    display: flex;
+/* .container { */
+    /* display: flex;
     height: 100vh;
-}
+    background-color: #007BFF
+} */
 
 /* Sidebar Styles */
 .sidebar {
@@ -58,7 +59,7 @@
     padding: 20px;
     background-color: #ffffff;
     overflow-y: auto;
-    border-radius: 2px;
+    border-radius: 20px;
 }
 
 h1 {
@@ -96,24 +97,48 @@ select {
     padding: 10px;
     font-size: 1em;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     width: 90%;
 }
-
 button {
-    padding: 10px 20px;
-    font-size: 1.1em;
-    background-color: #0040ff;
+    padding: 12px 30px;
+    background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 100%;
+    font-size: 16px;
+    width: 90%;
+    
 }
 
-button:hover {
-    background-color: #030202;
+
+.registration-form button{
+    display: flex;
+    justify-content: center;
+
 }
-/* .register{
-    color:rgb(211, 12, 12);
-} */
+
+
+
+.registration-form button{
+    margin-top:90%;
+}
+
+.done button{
+    margin-bottom:auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    width:90px;
+    padding: 10px 20px;
+    margin-left :20px;
+}
+button.cancel:hover {
+    background-color: #a34141;
+}
+button.register:hover {
+    background-color: #4f9c47;
+}
+
+
