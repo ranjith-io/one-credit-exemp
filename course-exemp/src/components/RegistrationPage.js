@@ -1,33 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RegistrationPage.css'; // Reuse the same styles for consistency
+import './RegistrationPage.css';
 
 function RegistrationPage() {
-    const navigate = useNavigate(); // Initialize the navigate function for logout
-    
-    const handlelogin =(e) => {
-        navigate('/start');
-    };
-    
-      const handleLogout = () => {
-        // Redirect to AuthPage (login page) on logout
-        navigate('/');
-      };
-      const handleRegistration=() =>{
-        navigate('/registration');
-      }
+  const navigate = useNavigate();
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedSemester, setSelectedSemester] = useState('');
+  const [courses, setCourses] = useState([]);
+
+  const departmentSemesterCourses = {
+    informationTechnology: {
+      3: ['Web Development', 'Data Structures', 'Networking'],
+      4: ['Cloud Computing', 'Operating Systems', 'DBMS'],
+      5: ['Software Engineering', 'Artificial Intelligence', 'Cyber Security'],
+      6: ['Machine Learning', 'Big Data Analytics', 'IoT'],
+    },
+    computerScience: {
+      3: ['Programming in C', 'Data Structures', 'Algorithms'],
+      4: ['Operating Systems', 'Database Systems', 'Networks'],
+      5: ['Artificial Intelligence', 'Machine Learning', 'Cryptography'],
+      6: ['Cloud Computing', 'Blockchain', 'Quantum Computing'],
+    },
+    electronicsAndCommunication: {
+      3: ['Digital Circuits', 'Signals & Systems', 'Basic Electronics'],
+      4: ['Microprocessors', 'VLSI Design', 'Communication Systems'],
+      5: ['Antenna Design', 'Wireless Communication', 'Embedded Systems'],
+      6: ['Radar Systems', 'Optical Communication', 'IoT'],
+    },
+    mechatronics: {
+      3: ['Robotics Basics', 'Material Science', 'Thermodynamics'],
+      4: ['Machine Design', 'Control Systems', 'Sensors & Actuators'],
+      5: ['Industrial Robotics', 'Automation Systems', 'Dynamics'],
+      6: ['AI in Robotics', 'Advanced Control Systems', 'IoT in Mechatronics'],
+    },
+    civil: {
+      3: ['Structural Analysis', 'Surveying', 'Geotechnical Engineering'],
+      4: ['Transportation Engineering', 'Hydraulics', 'Concrete Technology'],
+      5: ['Building Design', 'Environmental Engineering', 'Construction Planning'],
+      6: ['Earthquake Engineering', 'Urban Planning', 'Sustainable Development'],
+    },
+  };
+
+  const handleDepartmentChange = (e) => {
+    const department = e.target.value;
+    setSelectedDepartment(department);
+    setCourses([]); // Reset courses when department changes
+  };
+
+  const handleSemesterChange = (e) => {
+    const semester = e.target.value;
+    setSelectedSemester(semester);
+    if (selectedDepartment && departmentSemesterCourses[selectedDepartment]) {
+      setCourses(departmentSemesterCourses[selectedDepartment][semester] || []);
+    } else {
+      setCourses([]);
+    }
+  };
+
+  const handleLogin = () => {
+    navigate('/start');
+  };
+
+  const handleLogout = () => {
+    navigate('/');
+  };
+
+  const handleRegistration = () => {
+    navigate('/registration');
+  };
+
   return (
     <div className="container">
       {/* Sidebar Section */}
       <div className="sidebar">
         <h2>Menu</h2>
         <ul>
-        <li> <button onClick={handleRegistration}>Registration</button></li>
-        <li>
-            <button onClick={handlelogin}>Course Exemption Form</button></li>
-        <li>
-            <button onClick={handleLogout}>Logout</button>
-        </li>
+          <li><button onClick={handleRegistration}>Registration</button></li>
+          <li><button onClick={handleLogin}>Course Exemption Form</button></li>
+          <li><button onClick={handleLogout}>Logout</button></li>
         </ul>
       </div>
 
@@ -45,7 +95,8 @@ function RegistrationPage() {
           </div>
           <div className="form-group">
             <label htmlFor="department">Department</label>
-            <select id="department">
+            <select id="department" value={selectedDepartment} onChange={handleDepartmentChange}>
+              <option value="">Select Department</option>
               <option value="informationTechnology">Information Technology</option>
               <option value="computerScience">Computer Science</option>
               <option value="electronicsAndCommunication">Electronics and Communication</option>
@@ -53,19 +104,29 @@ function RegistrationPage() {
               <option value="civil">Civil</option>
             </select>
           </div>
-          <div className='semester'>
+          <div className="form-group">
             <label htmlFor="semester">Semester</label>
-            <select id="semester">
-              <option value="1">Semester 3</option>
-              <option value="2">Semester 4</option>
-              <option value="3">Semester 5</option>
-              <option value="4">Semester 6</option>
-            </select>            
+            <select id="semester" value={selectedSemester} onChange={handleSemesterChange}>
+              <option value="">Select Semester</option>
+              <option value="3">Semester 3</option>
+              <option value="4">Semester 4</option>
+              <option value="5">Semester 5</option>
+              <option value="6">Semester 6</option>
+            </select>
           </div>
-          <div className='done'>
-          <button className='register' type="submit">Register</button>
-          <button className='cancel' type="reset">Cancel</button>
-          </div>        
+          <div className="form-group">
+            <label htmlFor="courses">Courses</label>
+            <select id="courses">
+              <option value="">Select Course</option>
+              {courses.map((course, index) => (
+                <option key={index} value={course}>{course}</option>
+              ))}
+            </select>
+          </div>
+          <div className="done">
+            <button className="register" type="submit">Register</button>
+            <button className="cancel" type="reset">Cancel</button>
+          </div>
         </form>
       </div>
     </div>
