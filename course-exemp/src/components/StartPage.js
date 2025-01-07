@@ -1,18 +1,40 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import navigate hook for redirecting
-import './StartPage.css'; // Add styles in this file
+import React,{useState} from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
+import './StartPage.css';
 
 function StartPage() {
   // const [firstName, setFirstName] = useState('');
   // const [rollNumber, setRollNumber] = useState('');
   const navigate = useNavigate(); // Initialize the navigate function for logout
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log('Submitted:', { firstName, rollNumber });
-  //   setFirstName('');
-  //   setRollNumber('');
-  // };
+  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    rollNumber: '',
+    department: '',
+    course1: '',
+    course2: '',
+    course3: '',
+  });
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try{
+      const response = axios.post('http://localhost:5000/exemption',formData);
+      console.log('Response:', response.data);
+      alert('Submission successful!');
+    }
+    catch(error){
+      console.error('Error:', error);
+      alert('Submission failed!');
+    }
+  };
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]:e.target.value,
+    }
+  )};
 
   const handlelogin =(e) => {
     navigate('/start');
@@ -46,17 +68,31 @@ function StartPage() {
       {/* <h1>One Credit ourse Exemption</h1> */}
 
       <div className="main-content">
-        <form className="exemption-form">
+        <form className="exemption-form" onSubmit={handleSubmit}>
           {/* Basic Information Section */}
           <div className='Student'>
           <h2>Student details</h2>
           <div className="form-group">
-            <label htmlFor="firstName">First Name</label>
-            <input type="text" id="firstName" placeholder="Enter your name" />
+            <label htmlFor="name">Name</label>
+            <input required type="text" id="name" value={formData.name} onChange={handleInputChange} placeholder="Enter your name" />
           </div>
           <div className="form-group">
             <label htmlFor="rollNumber">Roll Number</label>
-            <input type="text" id="rollNumber" placeholder="Ex: 7376221MC137" />
+            <input type="text" id="rollNumber" value={formData.rollNumber} onChange={handleInputChange} placeholder="Ex: 7376221MC137" />
+          </div>
+          <div className="form-group">
+            <label htmlFor="department">Department</label>
+            <select required id="department" value={selectedDepartment} onChange={(e) => {
+              handleInputChange(e);
+              setSelectedDepartment(e.target.value);
+              }}>
+              <option value=''>Select Department</option>
+              <option value="IT">Information Technology</option>
+              <option value="ECE">Electronics and Communication Engineering</option>
+              <option value="CSE">Computer Science and Engineering</option>
+              <option value="ME">Mechatronics</option>
+              <option value="CE">Civil Engineering</option>
+            </select>
           </div>
           </div>
 
@@ -70,7 +106,7 @@ function StartPage() {
           </div>
           <div className="form-group">
             <label htmlFor="firstCourseCode">One Credit Course Code 1</label>
-            <input type="text" id="firstCourseCode" placeholder="Course code" />
+            <input required type="text" id="course1" value={formData.course1} onChange={handleInputChange} placeholder="Course code" />
           </div>
 
           {/* Second Course */}
@@ -80,7 +116,7 @@ function StartPage() {
           </div>
           <div className="form-group">
             <label htmlFor="secondCourseCode">One Credit Course Code 2</label>
-            <input type="text" id="secondCourseCode" placeholder="Course code" />
+            <input required type="text" id="course2"value={formData.course2} onChange={handleInputChange} placeholder="Course code" />
           </div>
 
           {/* Third Course */}
@@ -90,8 +126,9 @@ function StartPage() {
           </div>
           <div className="form-group">
             <label htmlFor="thirdCourseCode">One Credit Course Code 3</label>
-            <input type="text" id="thirdCourseCode" placeholder="Course code" />
+            <input required type="text" id="course3"value={formData.course3} onChange={handleInputChange} placeholder="Course code" />
           </div>
+          
 
           <div className='done'>
           <button className='submit' type="submit">Submit</button>

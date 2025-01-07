@@ -107,7 +107,7 @@
     width: 90%;
   }
   
-  /* button {
+  button {
     padding: 10px 20px;
     font-size: 1.1em;
     background-color: #e69131;
@@ -116,7 +116,7 @@
     border-radius: 5px;
     cursor: pointer;
     width: 95%;
-  } */
+  }
 
 
 .exemption-form button:hover {

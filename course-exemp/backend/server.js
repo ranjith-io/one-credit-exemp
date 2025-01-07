@@ -14,7 +14,7 @@ app.use(cors());
 // MongoDB connection
 const mongoURI = process.env.mongoURI; // Replace with your MongoDB URI
 mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoURI)
   .then(() => console.log("Connected to MongoDB1"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
@@ -27,8 +27,17 @@ const registrationSchema = new mongoose.Schema({
   course: String,
 });
 
-const Registration = mongoose.model('Registration', registrationSchema);
+const exemptionSchema= new mongoose.Schema({
+  name: String,
+  rollNumber: String,
+  department: String,
+  course1: String,
+  course2: String,
+  course3: String,
+});
 
+const Registration = mongoose.model('Registration', registrationSchema);
+const Exemption=mongoose.model('exemptions',exemptionSchema);
 // Routes
 app.post('/register', async (req, res) => {
   try {
@@ -37,6 +46,16 @@ app.post('/register', async (req, res) => {
     res.status(201).json(savedRegistration);
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+});
+app.post('/exemption', async (req, res) => {
+  try{
+    const newExemption = new Exemption(req.body);
+    const savedExemption = await newExemption.save();
+    res.status(201).json(savedExemption);
+  }
+  catch(error){
+    res.status(400).json({error: error.message});
   }
 });
 
