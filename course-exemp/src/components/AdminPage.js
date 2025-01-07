@@ -7,13 +7,12 @@ function AdminPage() {
 
   // Sample student details for demonstration
   const allStudents = [
-    { name: 'John Doe', rollNumber: '7376221MC137', semester: '5th' },
-    { name: 'Jane Smith', rollNumber: '7376221MC138', semester: '6th' },
-    { name: 'Alice Brown', rollNumber: '7376221MC139', semester: '4th' },
-    { name: 'Bob White', rollNumber: '7376221MC140', semester: '3rd' },
-    { name: 'Charlie Ginger', rollNumber: '7376221MC141', semester: '5th' },
-    { name: 'Diana Black', rollNumber: '7376221MC142', semester: '2nd' },
-    // Add more students here if needed
+    { name: 'Ranjith ', rollNumber: '7376221MC137', semester: '5th' },
+    { name: 'Kani ', rollNumber: '7376221MC138', semester: '6th' },
+    { name: 'Pravin ', rollNumber: '7376221MC139', semester: '4th' },
+    { name: 'Sivasurya ', rollNumber: '7376221MC140', semester: '3rd' },
+    { name: 'Kaviya S ', rollNumber: '7376221MC141', semester: '5th' },
+    { name: 'Kathiresan ', rollNumber: '7376221MC142', semester: '2nd' },
   ];
 
   // For pagination - Show 3 students per page
@@ -26,15 +25,15 @@ function AdminPage() {
 
   const handleApprove = (rollNumber) => {
     console.log(`Approved exemption for ${rollNumber}`);
-    // Handle approval logic here
+    //Handle approval 
   };
 
   const handleReject = (rollNumber) => {
     console.log(`Rejected exemption for ${rollNumber}`);
-    // Handle rejection logic here
+    //Handle rejection 
   };
 
-  // Calculate which students to display on the current page
+  //Calculate which students to display on the current page
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
   const currentStudents = allStudents.slice(indexOfFirstStudent, indexOfLastStudent);

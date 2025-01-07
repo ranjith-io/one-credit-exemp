@@ -75,7 +75,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     width: 100%; /* Ensure card uses full available width */
-    max-width: 600px; /* Limit the width to prevent it from expanding too much */
+    max-width: 700px; /* Limit the width to prevent it from expanding too much */
     margin: 0 auto; /* Center the card */
   }
   

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './RegistrationPage.css';
 
 function RegistrationPage() {
@@ -7,6 +8,14 @@ function RegistrationPage() {
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedSemester, setSelectedSemester] = useState('');
   const [courses, setCourses] = useState([]);
+
+  const [formData, setFormData] = useState({
+    name: '',
+    rollNumber: '',
+    department: '',
+    semester: '',
+    course: '',
+  });
 
   const departmentSemesterCourses = {
     informationTechnology: {
@@ -19,7 +28,7 @@ function RegistrationPage() {
       3: ['Programming in C', 'Data Structures', 'Algorithms'],
       4: ['Operating Systems', 'Database Systems', 'Networks'],
       5: ['Artificial Intelligence', 'Machine Learning', 'Cryptography'],
-      6: ['Cloud Computing', 'Blockchain', 'Quantum Computing'],
+        6: ['Cloud Computing', 'Blockchain', 'Quantum Computing'],
     },
     electronicsAndCommunication: {
       3: ['Digital Circuits', 'Signals & Systems', 'Basic Electronics'],
@@ -56,6 +65,23 @@ function RegistrationPage() {
       setCourses([]);
     }
   };
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/register', formData);
+      alert('Registration successful!');
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Registration failed!');
+    }
+  };
 
   const handleLogin = () => {
     navigate('/start');
@@ -84,18 +110,21 @@ function RegistrationPage() {
       {/* Main Content Section */}
       <div className="main-content">
         <h1>Registration Form</h1>
-        <form className="registration-form">
+        <form className="registration-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
-            <input type="text" id="name" placeholder="Enter your name" />
+            <input required type="text" id="name" value={formData.name} onChange ={handleInputChange} placeholder="Enter your name" />
           </div>
           <div className="form-group">
             <label htmlFor="rollNumber">Roll Number</label>
-            <input type="text" id="rollNumber" placeholder="Enter your roll number" />
+            <input required type="text" id="rollNumber" value={formData.rollNumber} onChange={handleInputChange} placeholder="Enter your roll number" />
           </div>
           <div className="form-group">
             <label htmlFor="department">Department</label>
-            <select id="department" value={selectedDepartment} onChange={handleDepartmentChange}>
+            <select required id="department" value={selectedDepartment} onChange={(e) => {
+              handleInputChange(e); // Updates the department in formData
+              handleDepartmentChange(e); // Updates courses based on department
+            }}>
               <option value="">Select Department</option>
               <option value="informationTechnology">Information Technology</option>
               <option value="computerScience">Computer Science</option>
@@ -106,7 +135,10 @@ function RegistrationPage() {
           </div>
           <div className="form-group">
             <label htmlFor="semester">Semester</label>
-            <select id="semester" value={selectedSemester} onChange={handleSemesterChange}>
+            <select required id="semester" value={selectedSemester} onChange={(e) => {
+            handleInputChange(e); // Updates the semester in formData
+            handleSemesterChange(e); // Updates courses based on semester
+          }}>
               <option value="">Select Semester</option>
               <option value="3">Semester 3</option>
               <option value="4">Semester 4</option>
@@ -116,10 +148,10 @@ function RegistrationPage() {
           </div>
           <div className="form-group">
             <label htmlFor="courses">Courses</label>
-            <select id="courses">
-              <option value="">Select Course</option>
+            <select required id="course"  onChange={handleInputChange}>
+              <option value=''>Select Course</option>
               {courses.map((course, index) => (
-                <option key={index} value={course}>{course}</option>
+              <option key={index} value={course}>{course}</option>
               ))}
             </select>
           </div>

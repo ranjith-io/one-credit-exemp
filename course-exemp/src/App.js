@@ -8,7 +8,7 @@ import Adminpage from './components/AdminPage';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const navigate = useNavigate(); // useNavigate for redirecting after login
+  const navigate = useNavigate(); // useNavigate for redirecting 
 
   const handleLoginSuccess = (response,isAdminUser) => {
     console.log('Login successfully done:', response);
@@ -18,7 +18,7 @@ function App() {
       navigate('/admin');
     }
     else{
-    navigate('/start'); // Redirect to /start after successful login
+    navigate('/start'); // Redirect to student page
   }
 };
 
