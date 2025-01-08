@@ -3,7 +3,8 @@ import { Routes, Route, useNavigate } from 'react-router-dom'; // useNavigate fo
 import AuthPage from './components/AuthPage';
 import StartPage from './components/StartPage';
 import RegistrationPage from './components/RegistrationPage';
-import Adminpage from './components/AdminPage';
+import AdminPage from './components/AdminPage';
+import RegisDetails from './components/regisDetails';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -30,7 +31,7 @@ function App() {
     <Routes>
       <Route 
       path="/admin" 
-      element={isAuthenticated && isAdmin ? <Adminpage /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}      
+      element={isAuthenticated && isAdmin ? <AdminPage /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}      
       />
       <Route
         path="/"
@@ -40,7 +41,9 @@ function App() {
         path="/start"
         element={isAuthenticated ? <StartPage /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}
       />
+      
       <Route path="/registration" element={<RegistrationPage />} />
+      <Route path="/details" element={<RegisDetails />} />
     </Routes>
   );
 }
