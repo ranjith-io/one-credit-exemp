@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminPage.css'; 
+import './WelcomeAdmin.css'; 
 
-function AdminMain() {
+function WelcomeAdmin() {
   const navigate = useNavigate();
-  const [adminName, setAdminName] = useState(''); // State to store admin name
+  // const [adminName, setAdminName] = useState(''); // State to store admin name
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('googleUser')); // Assume details are stored in localStorage
-    if (storedUser && storedUser.name) {
-      setAdminName(storedUser.name);
-    } else {
-      navigate('/'); // Redirect to login if no user details are found
-    }
-  }, [navigate]);
+  
 
   const handleMenuClick = (path) => {
     navigate(path); // Navigate to the specified path
@@ -30,7 +23,7 @@ function AdminMain() {
         <h2>Admin Menu</h2>
         <ul>
         <li>
-            <button onClick={() => handleMenuClick('/main')}>Mainer</button>
+            <button onClick={() => handleMenuClick('/main')}>WelcomAdmin</button>
           </li>
           <li>
             <button onClick={() => handleMenuClick('/admin')}>One Credit Exemption Requests</button>
@@ -46,12 +39,11 @@ function AdminMain() {
       </div>
 
       {/* Main Content Section */}
-      <div className="main-content">
-        <h1>Welcome, Admin!</h1>
-        <h2>{adminName}</h2>
+      <div className="wmain-content">
+        <h1>Welcome Admin!</h1>
       </div>
     </div>
   );
 }
 
-export default AdminMain;
+export default WelcomeAdmin;

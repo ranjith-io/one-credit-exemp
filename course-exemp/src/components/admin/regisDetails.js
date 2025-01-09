@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AdminPage.css'; // Make sure the CSS file is linked
+import './AdminPage.css'; // Reuse the same CSS for styling
 
-function AdminPage() {
+function DetailsPage() {
   const navigate = useNavigate();
 
-  // Sample student details for demonstration
+  // Sample registration details for demonstration
   const allStudents = [
-    { name: 'Ranjith ', rollNumber: '7376221MC137', semester: '5th' },
-    { name: 'Kani ', rollNumber: '7376221MC138', semester: '6th' },
-    { name: 'Pravin ', rollNumber: '7376221MC139', semester: '4th' },
-    { name: 'Sivasurya ', rollNumber: '7376221MC140', semester: '3rd' },
-    { name: 'Kaviya S ', rollNumber: '7376221MC141', semester: '5th' },
-    { name: 'Kathiresan ', rollNumber: '7376221MC142', semester: '2nd' },
+    { name: 'Ranjith', rollNumber: '7376221MC137', semester: '5th', courseName: 'Data Structures', department: 'CSE' },
+    { name: 'Kani', rollNumber: '7376221MC138', semester: '6th', courseName: 'Operating Systems', department: 'IT' },
+    { name: 'Pravin', rollNumber: '7376221MC139', semester: '4th', courseName: 'Algorithms', department: 'ECE' },
+    { name: 'Sivasurya', rollNumber: '7376221MC140', semester: '3rd', courseName: 'Databases', department: 'EEE' },
+    { name: 'Kaviya S', rollNumber: '7376221MC141', semester: '5th', courseName: 'Machine Learning', department: 'CSE' },
+    { name: 'Kathiresan', rollNumber: '7376221MC142', semester: '2nd', courseName: 'Digital Circuits', department: 'ECE' },
   ];
 
-  
+  // For pagination - Show 3 students per page
   const studentsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -24,15 +24,16 @@ function AdminPage() {
   };
 
   const handleApprove = (rollNumber) => {
-    console.log(`Approved exemption for ${rollNumber}`);
-    //Handle approval 
+    console.log(`Approved registration for ${rollNumber}`);
+    // Handle approval
   };
 
   const handleReject = (rollNumber) => {
-    console.log(`Rejected exemption for ${rollNumber}`);
-    //Handle rejection 
+    console.log(`Rejected registration for ${rollNumber}`);
+    // Handle rejection
   };
 
+  // Calculate which students to display on the current page
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
   const currentStudents = allStudents.slice(indexOfFirstStudent, indexOfLastStudent);
@@ -48,6 +49,7 @@ function AdminPage() {
       setCurrentPage(currentPage - 1);
     }
   };
+
   const handleMenuClick = (path) => {
     navigate(path); // Navigate to the specified path
   };
@@ -58,13 +60,15 @@ function AdminPage() {
       <div className="sidebar">
         <h2>Admin Menu</h2>
         <ul>
-          <li>
-            <button onClick={() => {}}>One Credit Exemption Requests</button>
+        <li>
+            <button onClick={() => handleMenuClick('/main')}>WelcomAdmin</button>
           </li>
           <li>
-            <button onClick={() => handleMenuClick('/details')}>Registration Details</button>
+            <button onClick={() => handleMenuClick('/admin')}>One Credit Exemption Requests</button>
           </li>
-          
+          <li>
+            <button onClick={() => {}}>Registration Details</button>
+          </li>
           <li>
             <button onClick={handleLogout}>Logout</button>
           </li>
@@ -73,21 +77,23 @@ function AdminPage() {
 
       {/* Main Content Section */}
       <div className="main-content">
-        <h1>Exemption Requests</h1>
+        <h1>Registration Details</h1>
 
-        {/* Display student details in a simple list */}
-        <div className="exemption-list">
+        {/* Display student details with course name and department */}
+        <div className="details-list">
           {currentStudents.map((student, index) => (
             <div key={index} className="student-card">
               <p><strong>Name:</strong> {student.name}</p>
               <p><strong>Roll Number:</strong> {student.rollNumber}</p>
               <p><strong>Semester:</strong> {student.semester}</p>
+              <p><strong>Course Name:</strong> {student.courseName}</p>
+              <p><strong>Department:</strong> {student.department}</p>
 
               <div className="action-buttons">
-                <button className='Approve' onClick={() => handleApprove(student.rollNumber)}>
+                <button className="Approve" onClick={() => handleApprove(student.rollNumber)}>
                   Approve
                 </button>
-                <button className='Reject' onClick={() => handleReject(student.rollNumber)}>
+                <button className="Reject" onClick={() => handleReject(student.rollNumber)}>
                   Reject
                 </button>
               </div>
@@ -118,4 +124,4 @@ function AdminPage() {
   );
 }
 
-export default AdminPage;
+export default DetailsPage;

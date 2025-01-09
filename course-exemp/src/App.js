@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom'; // useNavigate for navigation
 import AuthPage from './components/AuthPage';
-import StartPage from './components/StartPage';
-import RegistrationPage from './components/RegistrationPage';
-import AdminPage from './components/AdminPage';
-import RegisDetails from './components/regisDetails';
+import StartPage from './components/student/StartPage';
+import RegistrationPage from './components/student/RegistrationPage';
+import AdminPage from './components/admin/AdminPage';
+import RegisDetails from './components/admin/regisDetails';
+import WelcomeAdmin from './components/admin/WelcomAdmin';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,7 +17,7 @@ function App() {
     setIsAuthenticated(true);
     setIsAdmin(isAdminUser);
     if (isAdminUser) {
-      navigate('/admin');
+      navigate('/main');
     }
     else{
     navigate('/start'); // Redirect to student page
@@ -30,8 +31,8 @@ function App() {
   return (
     <Routes>
       <Route 
-      path="/admin" 
-      element={isAuthenticated && isAdmin ? <AdminPage /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}      
+      path="/main" 
+      element={isAuthenticated && isAdmin ? <WelcomeAdmin /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}      
       />
       <Route
         path="/"
@@ -44,6 +45,7 @@ function App() {
       
       <Route path="/registration" element={<RegistrationPage />} />
       <Route path="/details" element={<RegisDetails />} />
+      <Route path='/admin' element={<AdminPage/>}/>
     </Routes>
   );
 }
