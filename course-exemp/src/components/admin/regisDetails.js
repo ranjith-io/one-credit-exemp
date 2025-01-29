@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './AdminPage.css'; // Reuse the same CSS for styling
 
 function DetailsPage() {
   const navigate = useNavigate();
+  const [students, setStudents] = useState([]);
 
   // Sample registration details for demonstration
-  const allStudents = [
-    { name: 'Ranjith', rollNumber: '7376221MC137', semester: '5th', courseName: 'Data Structures', department: 'CSE' },
-    { name: 'Kani', rollNumber: '7376221MC138', semester: '6th', courseName: 'Operating Systems', department: 'IT' },
-    { name: 'Pravin', rollNumber: '7376221MC139', semester: '4th', courseName: 'Algorithms', department: 'ECE' },
-    { name: 'Sivasurya', rollNumber: '7376221MC140', semester: '3rd', courseName: 'Databases', department: 'EEE' },
-    { name: 'Kaviya S', rollNumber: '7376221MC141', semester: '5th', courseName: 'Machine Learning', department: 'CSE' },
-    { name: 'Kathiresan', rollNumber: '7376221MC142', semester: '2nd', courseName: 'Digital Circuits', department: 'ECE' },
-  ];
+  // const allStudents = [
+  //   { name: 'Ranjith', rollNumber: '7376221MC137', semester: '5th', courseName: 'Data Structures', department: 'CSE' },
+  //   { name: 'Kani', rollNumber: '7376221MC138', semester: '6th', courseName: 'Operating Systems', department: 'IT' },
+  //   { name: 'Pravin', rollNumber: '7376221MC139', semester: '4th', courseName: 'Algorithms', department: 'ECE' },
+  //   { name: 'Sivasurya', rollNumber: '7376221MC140', semester: '3rd', courseName: 'Databases', department: 'EEE' },
+  //   { name: 'Kaviya S', rollNumber: '7376221MC141', semester: '5th', courseName: 'Machine Learning', department: 'CSE' },
+  //   { name: 'Kathiresan', rollNumber: '7376221MC142', semester: '2nd', courseName: 'Digital Circuits', department: 'ECE' },
+  // ];
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/register');
+        setStudents(response.data);
+      } catch (error) {
+        console.error('Error fetching student data:', error);
+      }
+    };
+
+    fetchStudents();
+  }, []);
 
   // For pagination - Show 3 students per page
   const studentsPerPage = 3;
@@ -36,10 +50,10 @@ function DetailsPage() {
   // Calculate which students to display on the current page
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
-  const currentStudents = allStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+  const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent);
 
   const nextPage = () => {
-    if (currentPage < Math.ceil(allStudents.length / studentsPerPage)) {
+    if (currentPage < Math.ceil(students.length / studentsPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -86,8 +100,8 @@ function DetailsPage() {
               <p><strong>Name:</strong> {student.name}</p>
               <p><strong>Roll Number:</strong> {student.rollNumber}</p>
               <p><strong>Semester:</strong> {student.semester}</p>
-              <p><strong>Course Name:</strong> {student.courseName}</p>
-              <p><strong>Department:</strong> {student.department}</p>
+              <p><strong>Course Name:</strong> {student.course}</p>
+              {/* <p><strong>Department:</strong> {student.department}</p> */}
 
               <div className="action-buttons">
                 <button className="Approve" onClick={() => handleApprove(student.rollNumber)}>
@@ -113,8 +127,8 @@ function DetailsPage() {
 
           <button 
             onClick={nextPage} 
-            disabled={currentPage >= Math.ceil(allStudents.length / studentsPerPage)}
-            className={currentPage >= Math.ceil(allStudents.length / studentsPerPage) ? 'disabled' : ''}
+            disabled={currentPage >= Math.ceil(students.length / studentsPerPage)}
+            className={currentPage >= Math.ceil(students.length / studentsPerPage) ? 'disabled' : ''}
           >
             Next
           </button>

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 require('dotenv').config();
 
+
 const app = express();
 const PORT = 5000;
 
@@ -38,7 +39,9 @@ const exemptionSchema= new mongoose.Schema({
 
 const Registration = mongoose.model('Registration', registrationSchema);
 const Exemption=mongoose.model('exemptions',exemptionSchema);
+
 // Routes
+//new registration
 app.post('/register', async (req, res) => {
   try {
     const newRegistration = new Registration(req.body);
@@ -48,6 +51,7 @@ app.post('/register', async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+// new exemption
 app.post('/exemption', async (req, res) => {
   try{
     const newExemption = new Exemption(req.body);
@@ -56,6 +60,26 @@ app.post('/exemption', async (req, res) => {
   }
   catch(error){
     res.status(400).json({error: error.message});
+  }
+});
+
+//fetch registration details
+app.get('/register', async (req, res) => {
+  try {
+    const allRegistrations = await Registration.find();
+    res.status(200).json(allRegistrations);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+//fetch exemption details
+app.get('/exemption', async (req, res) => {
+  try {
+    const allExemptions = await Exemption.find();
+    res.status(200).json(allExemptions);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 });
 

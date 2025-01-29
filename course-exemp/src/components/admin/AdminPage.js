@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './AdminPage.css'; // Make sure the CSS file is linked
 
 function AdminPage() {
   const navigate = useNavigate();
 
   // Sample student details for demonstration
-  const allStudents = [
-    { name: 'Ranjith ', rollNumber: '7376221MC137', semester: '5th' },
-    { name: 'Kani ', rollNumber: '7376221MC138', semester: '6th' },
-    { name: 'Pravin ', rollNumber: '7376221MC139', semester: '4th' },
-    { name: 'Sivasurya ', rollNumber: '7376221MC140', semester: '3rd' },
-    { name: 'Kaviya S ', rollNumber: '7376221MC141', semester: '5th' },
-    { name: 'Kathiresan ', rollNumber: '7376221MC142', semester: '2nd' },
-  ];
+  // const allStudents = [
+  //   { name: 'Ranjith ', rollNumber: '7376221MC137', semester: '5th' },
+  //   { name: 'Kani ', rollNumber: '7376221MC138', semester: '6th' },
+  //   { name: 'Pravin ', rollNumber: '7376221MC139', semester: '4th' },
+  //   { name: 'Sivasurya ', rollNumber: '7376221MC140', semester: '3rd' },
+  //   { name: 'Kaviya S ', rollNumber: '7376221MC141', semester: '5th' },
+  //   { name: 'Kathiresan ', rollNumber: '7376221MC142', semester: '2nd' },
+  // ];
+  const [students, setStudents] = useState([]);
 
-  
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/exemption');
+        setStudents(response.data);
+      } catch (error) {
+        console.error('Error fetching student data:', error);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
   const studentsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -35,10 +49,10 @@ function AdminPage() {
 
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
-  const currentStudents = allStudents.slice(indexOfFirstStudent, indexOfLastStudent);
+  const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent);
 
   const nextPage = () => {
-    if (currentPage < Math.ceil(allStudents.length / studentsPerPage)) {
+    if (currentPage < Math.ceil(students.length / studentsPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -85,7 +99,7 @@ function AdminPage() {
             <div key={index} className="student-card">
               <p><strong>Name:</strong> {student.name}</p>
               <p><strong>Roll Number:</strong> {student.rollNumber}</p>
-              <p><strong>Semester:</strong> {student.semester}</p>
+              <p><strong>Department:</strong> {student.department}</p>
 
               <div className="action-buttons">
                 <button className='Approve' onClick={() => handleApprove(student.rollNumber)}>
@@ -111,8 +125,8 @@ function AdminPage() {
 
           <button 
             onClick={nextPage} 
-            disabled={currentPage >= Math.ceil(allStudents.length / studentsPerPage)}
-            className={currentPage >= Math.ceil(allStudents.length / studentsPerPage) ? 'disabled' : ''}
+            disabled={currentPage >= Math.ceil(students.length / studentsPerPage)}
+            className={currentPage >= Math.ceil(students.length / studentsPerPage) ? 'disabled' : ''}
           >
             Next
           </button>
