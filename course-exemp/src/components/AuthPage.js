@@ -17,18 +17,22 @@ function AuthPage({ onLoginSuccess, onLoginFailure }) {
               const decodedToken = jwtDecode(response.credential);
                 // console.log('Decoded token:', decodedToken);
               
-              const  email  = decodedToken.email; // Extract email from the response
-              if (email === 'ranjith.mc22@bitsathy.ac.in') {
+              const  d_email  = decodedToken.email;
+              const name=decodedToken.name;
+              console.log(name)
+              console.log(d_email) // Extract email from the response
+              if (d_email === 'ranjith.mc22@bitsathy.ac.in') {
                 // Call admin-specific handler
-                onLoginSuccess(decodedToken, true);
+                onLoginSuccess(decodedToken, true,name); //fuction call
               } else {
                 // Call student-specific handler
-                onLoginSuccess(decodedToken, false);
+                onLoginSuccess(decodedToken, false,name);
               }
             } catch (error) {
               console.error('Error decoding token:', error);
               onLoginFailure(error);
-            }}
+            }
+          }
           }
             onError={onLoginFailure}
             useOneTap

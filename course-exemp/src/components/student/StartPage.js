@@ -7,7 +7,7 @@ function StartPage() {
   // const [firstName, setFirstName] = useState('');
   // const [rollNumber, setRollNumber] = useState('');
   const navigate = useNavigate(); // Initialize the navigate function for logout
-  const [selectedDepartment, setSelectedDepartment] = useState('');
+  // const [selectedDepartment, setSelectedDepartment] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     rollNumber: '',
@@ -82,9 +82,9 @@ function StartPage() {
           </div>
           <div className="form-group">
             <label htmlFor="department">Department</label>
-            <select required id="department" value={selectedDepartment} onChange={(e) => {
+            <select required id="department" value={formData.department} onChange={(e) => {
               handleInputChange(e);
-              setSelectedDepartment(e.target.value);
+              // setSelectedDepartment(e.target.value);
               }}>
               <option value=''>Select Department</option>
               <option value="IT">Information Technology</option>

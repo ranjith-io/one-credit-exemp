@@ -1,10 +1,18 @@
 .wmain-content {
   display: flex;
-  justify-content: center;
-  height: 100vh;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: flex-start; /* Align items to the top */
+  align-items: flex-start; /* Align to the left */
+  height: 100vh; /* Full screen height */
+  width: calc(100% - 200px); /* Subtract the sidebar width */
   background-color: #f5f5f5;
   font-family: 'Arial', sans-serif;
-  margin-right: 680px;
-  font-size: 0.7cm;
-  
+  padding: 20px; /* Add some padding for spacing */
+  box-sizing: border-box; /* Ensure padding doesn't affect overall width */
+}
+
+h1 {
+  font-size: 2.5rem; /* Larger font size for better visibility */
+  color: #333; /* Set text color */
+  margin: 0; /* Remove default margin */
 }

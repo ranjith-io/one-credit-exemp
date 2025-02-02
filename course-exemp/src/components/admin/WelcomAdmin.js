@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './WelcomeAdmin.css'; 
+import './WelcomeAdmin.css';
+// import AuthPage from '../AuthPage'; 
 
-function WelcomeAdmin() {
+function WelcomeAdmin({Name}) {
   const navigate = useNavigate();
   // const [adminName, setAdminName] = useState(''); // State to store admin name
 
-  
+  // const name= AuthPage.decodedToken.name;
 
   const handleMenuClick = (path) => {
     navigate(path); // Navigate to the specified path
@@ -40,7 +41,7 @@ function WelcomeAdmin() {
 
       {/* Main Content Section */}
       <div className="wmain-content">
-        <h1>Welcome Admin!</h1>
+        <h1>Welcome Admin!{Name}</h1>
       </div>
     </div>
   );

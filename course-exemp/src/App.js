@@ -11,16 +11,20 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate(); // useNavigate for redirecting 
-
-  const handleLoginSuccess = (response,isAdminUser) => {
+  const [name, setName] = useState(''); // State to store admin name
+  const handleLoginSuccess = (response,isAdminUser,name) => {
     console.log('Login successfully done:', response);
     setIsAuthenticated(true);
     setIsAdmin(isAdminUser);
+    setName(name);
+    // console.log('isAdmin:',isAdminUser);
+    // console.log('email:',d_email);
+    // setName(response.profileObj.name);
     if (isAdminUser) {
       navigate('/main');
     }
     else{
-    navigate('/start'); // Redirect to student page
+    navigate('/start');  // Redirect to student page
   }
 };
 
@@ -30,17 +34,17 @@ function App() {
 
   return (
     <Routes>
-      <Route 
-      path="/main" 
-      element={isAuthenticated && isAdmin ? <WelcomeAdmin /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}      
-      />
       <Route
         path="/"
-        element={<AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}
+        element={<AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}// onLoginSuccess is a property
+      />
+      <Route 
+      path="/main" 
+      element={isAuthenticated && isAdmin ? <WelcomeAdmin Name={name} /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}      
       />
       <Route
         path="/start"
-        element={isAuthenticated ? <StartPage /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}
+        element={isAuthenticated ? <StartPage Name={name} /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}
       />
       
       <Route path="/registration" element={<RegistrationPage />} />
