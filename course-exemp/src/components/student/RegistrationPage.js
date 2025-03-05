@@ -74,9 +74,9 @@ function RegistrationPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/register', formData);
+      const response = await axios.post(`${process.env.react_api_url}/register`,formData);
       alert('Registration successful!');
-      console.log('Response:', response.data);
+      console.log('Response:',response.data);
     } catch (error) {
       console.error('Error:', error);
       alert('Registration failed!');

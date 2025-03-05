@@ -37,15 +37,30 @@ function DetailsPage() {
     navigate('/'); // Redirect to the login page
   };
 
-  const handleApprove = (rollNumber) => {
-    console.log(`Approved registration for ${rollNumber}`);
-    // Handle approval
+  const handleApprove = async (id, type) => {
+    try {
+      console.log(`Approved ${type} request for ${id}`);
+      const url = `http://localhost:5000/register/${id}`;
+      await axios.patch(url, { status: 'approved' });
+      alert(`Approval successfull!`);
+    } catch (error) {
+      console.error('Approval failed:', error);
+      alert('Failed to approve request.');
+    }
   };
 
-  const handleReject = (rollNumber) => {
-    console.log(`Rejected registration for ${rollNumber}`);
-    // Handle rejection
+  const handleReject = async (id, type) => {
+    try {
+      console.log(`Rejected ${type} request for ${id}`);
+      const url = `http://localhost:5000/register/${id}`;
+      await axios.patch(url, { status: 'rejected' });
+      alert(`Rejection successfull!`);
+    } catch (error) {
+      console.error('Rejection failed:', error);
+      alert('Failed to reject request.');
+    }
   };
+
 
   // Calculate which students to display on the current page
   const indexOfLastStudent = currentPage * studentsPerPage;
@@ -104,10 +119,10 @@ function DetailsPage() {
               {/* <p><strong>Department:</strong> {student.department}</p> */}
 
               <div className="action-buttons">
-                <button className="Approve" onClick={() => handleApprove(student.rollNumber)}>
-                  Approve
-                </button>
-                <button className="Reject" onClick={() => handleReject(student.rollNumber)}>
+              <button className='Approve' onClick={() => handleApprove(student._id, 'register')}>
+               Approve
+              </button>
+                <button className="Reject" onClick={() => handleReject(student._id,'register')}>
                   Reject
                 </button>
               </div>

@@ -16,7 +16,7 @@ app.use(cors());
 const mongoURI = process.env.mongoURI; // Replace with your MongoDB URI
 mongoose
   .connect(mongoURI)
-  .then(() => console.log("Connected to MongoDB1"))
+  .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Schema and Model
@@ -26,6 +26,7 @@ const registrationSchema = new mongoose.Schema({
   department: String,
   semester: String,
   course: String,
+  status: {type:String,default:'pending'}
 });
 
 const exemptionSchema= new mongoose.Schema({
@@ -35,6 +36,7 @@ const exemptionSchema= new mongoose.Schema({
   course1: String,
   course2: String,
   course3: String,
+  status: {type:String,default:'pending'}
 });
 
 const Registration = mongoose.model('Registration', registrationSchema);
@@ -66,8 +68,8 @@ app.post('/exemption', async (req, res) => {
 //fetch registration details
 app.get('/register', async (req, res) => {
   try {
-    const allRegistrations = await Registration.find();
-    res.status(200).json(allRegistrations);
+    const pendingRegistrations = await Registration.find({status:'pending'});
+    res.status(200).json(pendingRegistrations);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -76,14 +78,48 @@ app.get('/register', async (req, res) => {
 //fetch exemption details
 app.get('/exemption', async (req, res) => {
   try {
-    const allExemptions = await Exemption.find();
-    res.status(200).json(allExemptions);
+    const pendingExemptions = await Exemption.find({status:'pending'});
+    res.status(200).json(pendingExemptions);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+app.patch('/register/:id', async (req, res) => {
+  try {
+    console.log("Received PATCH request for ID:", req.params.id);
+    console.log("New Status:", req.body.status);
+    const { status } = req.body;
+    const updatedRegistration = await Registration.findOneAndUpdate(
+      { _id: req.params.id },
+      { status },
+      { new: true }
+    );
+    console.log("RUpdated Record:", updatedRegistration); // Log the updated record
+    res.status(200).json(updatedRegistration);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+app.patch('/exemption/:id', async (req, res) => {
+  try {
+    console.log("Received PATCH request for ID:", req.params.id);
+    console.log("New Status:", req.body.status);
+    const { status } = req.body;
+    const updatedRegistration = await Exemption.findOneAndUpdate(
+      { _id: req.params.id },
+      { status },
+      { new: true }
+    );
+    console.log("EUpdated Record:", updatedRegistration); // Log the updated record
+    res.status(200).json(updatedRegistration);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 });
 
+
+
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0',() => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -6,13 +6,13 @@ import './AdminPage.css'; // Make sure the CSS file is linked
 function AdminPage() {
   const navigate = useNavigate();
 
-  // Sample student details for demonstration
+  // Sample student details for demonstration before API Integration
   // const allStudents = [
   //   { name: 'Ranjith ', rollNumber: '7376221MC137', semester: '5th' },
   //   { name: 'Kani ', rollNumber: '7376221MC138', semester: '6th' },
   //   { name: 'Pravin ', rollNumber: '7376221MC139', semester: '4th' },
   //   { name: 'Sivasurya ', rollNumber: '7376221MC140', semester: '3rd' },
-  //   { name: 'Kaviya S ', rollNumber: '7376221MC141', semester: '5th' },
+  //   { name: 'Kaviyan ', rollNumber: '7376221MC141', semester: '5th' },
   //   { name: 'Kathiresan ', rollNumber: '7376221MC142', semester: '2nd' },
   // ];
   const [students, setStudents] = useState([]);
@@ -37,14 +37,30 @@ function AdminPage() {
     navigate('/'); // Redirect to the login page
   };
 
-  const handleApprove = (rollNumber) => {
-    console.log(`Approved exemption for ${rollNumber}`);
-    //Handle approval 
+  const handleApprove = async (id, type) => {
+    try {
+      console.log(`Approved ${type} request for ${id}`);
+      const url = `http://localhost:5000/exemption/${id}`;
+      await axios.patch(url, { status: 'approved' });
+      setStudents(students.filter(student => student._id !== id)); // Remove approved student from UI
+      alert(`Approval successfull!`);
+    } catch (error) {
+      console.error('Approval failed:', error);
+      alert('Failed to approve request.');
+    }
   };
 
-  const handleReject = (rollNumber) => {
-    console.log(`Rejected exemption for ${rollNumber}`);
-    //Handle rejection 
+  const handleReject = async (id, type) => {
+    try {
+      console.log(`Rejected ${type} request for ${id}`);
+      const url = `http://localhost:5000/exemption/${id}`;
+      await axios.patch(url, { status: 'rejected' });
+      setStudents(students.filter(student => student._id !== id)); // Remove approved student from UI
+      alert(`Rejection successfull!`);
+    } catch (error) {
+      console.error('Rejection failed:', error);
+      alert('Failed to reject request.');
+    }
   };
 
   const indexOfLastStudent = currentPage * studentsPerPage;
@@ -102,10 +118,10 @@ function AdminPage() {
               <p><strong>Department:</strong> {student.department}</p>
 
               <div className="action-buttons">
-                <button className='Approve' onClick={() => handleApprove(student.rollNumber)}>
+                <button className='Approve' onClick={() => handleApprove(student._id,'exemption')}>
                   Approve
                 </button>
-                <button className='Reject' onClick={() => handleReject(student.rollNumber)}>
+                <button className='Reject' onClick={() => handleReject(student._id,'exemption')}>
                   Reject
                 </button>
               </div>

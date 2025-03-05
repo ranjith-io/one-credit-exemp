@@ -17,11 +17,11 @@ function StartPage() {
     course3: '',
   });
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     try{
-      const response = axios.post('http://localhost:5000/exemption',formData);
-      console.log('Response:', response.data);
+      const response =await axios.post(`${process.env.react_api_url}/exemption`,formData)
+      console.log('Responsee:', response.data);
       alert('Submission successful!');
     }
     catch(error){
