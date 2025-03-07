@@ -1,0 +1,31 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - master  # Change this to your production branch name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ vars.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }} << 'EOF'
+            echo "✅ SSH Connection Successful to EC2"
+            # cd one-credit-exemp/course-exemp/backend
+            # git pull origin master  # Fetch latest changes
+            # npm install           # Install dependencies (if applicable)
+            # node server.js 
+          EOF  
