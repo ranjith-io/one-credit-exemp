@@ -20,7 +20,7 @@ function StartPage() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     try{
-      const response =await axios.post(`${process.env.react_api_url}/exemption`,formData)
+      const response =await axios.post(`${process.env.REACT_APP_API}/exemption`,formData)
       console.log('Responsee:', response.data);
       alert('Submission successful!');
     }

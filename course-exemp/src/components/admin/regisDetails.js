@@ -19,7 +19,7 @@ function DetailsPage() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/register');
+        const response = await axios.get(`${process.env.REACT_APP_API}/register`);
         setStudents(response.data);
       } catch (error) {
         console.error('Error fetching student data:', error);
@@ -40,7 +40,7 @@ function DetailsPage() {
   const handleApprove = async (id, type) => {
     try {
       console.log(`Approved ${type} request for ${id}`);
-      const url = `http://localhost:5000/register/${id}`;
+      const url = `${process.env.REACT_APP_API}/register/${id}`;
       await axios.patch(url, { status: 'approved' });
       alert(`Approval successfull!`);
     } catch (error) {
@@ -52,7 +52,7 @@ function DetailsPage() {
   const handleReject = async (id, type) => {
     try {
       console.log(`Rejected ${type} request for ${id}`);
-      const url = `http://localhost:5000/register/${id}`;
+      const url = `${process.env.REACT_APP_API}/register/${id}`;
       await axios.patch(url, { status: 'rejected' });
       alert(`Rejection successfull!`);
     } catch (error) {

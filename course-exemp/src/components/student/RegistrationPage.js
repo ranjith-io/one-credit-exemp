@@ -49,6 +49,7 @@ function RegistrationPage() {
       6: ['Earthquake Engineering', 'Urban Planning', 'Sustainable Development'],
     },
   };
+  console.log(process.env.REACT_APP_API);
 
   const handleDepartmentChange = (e) => {
     const department = e.target.value;
@@ -71,10 +72,12 @@ function RegistrationPage() {
       [e.target.id]: e.target.value,
     });
   };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${process.env.react_api_url}/register`,formData);
+      console.log(process.env.REACT_APP_API);
+      const response = await axios.post(`${process.env.REACT_APP_API}/register`,formData);
       alert('Registration successful!');
       console.log('Response:',response.data);
     } catch (error) {

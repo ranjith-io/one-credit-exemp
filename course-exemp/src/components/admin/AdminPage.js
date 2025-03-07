@@ -5,6 +5,7 @@ import './AdminPage.css'; // Make sure the CSS file is linked
 
 function AdminPage() {
   const navigate = useNavigate();
+  console.log(process.env.REACT_APP_API);
 
   // Sample student details for demonstration before API Integration
   // const allStudents = [
@@ -20,7 +21,7 @@ function AdminPage() {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/exemption');
+        const response = await axios.get(`${process.env.REACT_APP_API}/exemption`);
         setStudents(response.data);
       } catch (error) {
         console.error('Error fetching student data:', error);
@@ -40,7 +41,7 @@ function AdminPage() {
   const handleApprove = async (id, type) => {
     try {
       console.log(`Approved ${type} request for ${id}`);
-      const url = `http://localhost:5000/exemption/${id}`;
+      const url = `${process.env.REACT_APP_API}/exemption/${id}`;
       await axios.patch(url, { status: 'approved' });
       setStudents(students.filter(student => student._id !== id)); // Remove approved student from UI
       alert(`Approval successfull!`);
@@ -53,7 +54,7 @@ function AdminPage() {
   const handleReject = async (id, type) => {
     try {
       console.log(`Rejected ${type} request for ${id}`);
-      const url = `http://localhost:5000/exemption/${id}`;
+      const url = `${process.env.REACT_APP_API}/exemption/${id}`;
       await axios.patch(url, { status: 'rejected' });
       setStudents(students.filter(student => student._id !== id)); // Remove approved student from UI
       alert(`Rejection successfull!`);
