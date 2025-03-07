@@ -112,7 +112,7 @@ function RegistrationPage() {
 
       {/* Main Content Section */}
       <div className="main-content">
-        <h1>Registration Form</h1>
+        <h1>Registration test Form</h1>
         <form className="registration-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
