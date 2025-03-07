@@ -21,7 +21,7 @@ function StartPage() {
     e.preventDefault();
     try{
       const response =await axios.post(`${process.env.REACT_APP_API}/exemption`,formData)
-      console.log('Responsee:', response.data);
+      // console.log('Responsee:', response.data);
       alert('Submission successful!');
     }
     catch(error){

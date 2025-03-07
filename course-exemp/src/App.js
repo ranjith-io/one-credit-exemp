@@ -13,7 +13,7 @@ function App() {
   const navigate = useNavigate(); // useNavigate for redirecting 
   const [name, setName] = useState(''); // State to store admin name
   const handleLoginSuccess = (response,isAdminUser,name) => {
-    console.log('Login successfully done:', response);
+    // console.log('Login successfully done:', response);
     setIsAuthenticated(true);
     setIsAdmin(isAdminUser);
     setName(name);

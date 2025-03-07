@@ -19,8 +19,8 @@ function AuthPage({ onLoginSuccess, onLoginFailure }) {
               
               const  d_email  = decodedToken.email;
               const name=decodedToken.name;
-              console.log(name)
-              console.log(d_email) // Extract email from the response
+              // console.log(name)
+              // console.log(d_email) // Extract email from the response
               if (d_email === 'ranjith.mc22@bitsathy.ac.in') {
                 // Call admin-specific handler
                 onLoginSuccess(decodedToken, true,name); //fuction call

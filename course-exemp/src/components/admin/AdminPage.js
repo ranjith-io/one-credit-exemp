@@ -5,7 +5,6 @@ import './AdminPage.css'; // Make sure the CSS file is linked
 
 function AdminPage() {
   const navigate = useNavigate();
-  console.log(process.env.REACT_APP_API);
 
   // Sample student details for demonstration before API Integration
   // const allStudents = [

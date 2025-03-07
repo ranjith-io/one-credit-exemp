@@ -76,10 +76,9 @@ function RegistrationPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(process.env.REACT_APP_API);
       const response = await axios.post(`${process.env.REACT_APP_API}/register`,formData);
       alert('Registration successful!');
-      console.log('Response:',response.data);
+      // console.log('Response:',response.data);
     } catch (error) {
       console.error('Error:', error);
       alert('Registration failed!');
@@ -112,7 +111,7 @@ function RegistrationPage() {
 
       {/* Main Content Section */}
       <div className="main-content">
-        <h1>Registration test Form</h1>
+        <h1>Registration Form</h1>
         <form className="registration-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
