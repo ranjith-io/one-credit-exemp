@@ -15,17 +15,16 @@ jobs:
 
       - name: Setup SSH Key
         run: |
-          # mkdir -p ~/.ssh
+          mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ vars.EC2_HOST }} >> ~/.ssh/known_hosts
+          # ssh-keyscan -H ${{ vars.EC2_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to EC2
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }} << 'EOF'
-            echo "✅ SSH Connection Successful to EC2"
-            # cd one-credit-exemp/course-exemp/backend
-            # git pull origin master  # Fetch latest changes
-            # npm install           # Install dependencies (if applicable)
-            # node server.js 
-          EOF  
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}   <<'EOF'         
+            cd one-credit-exemp/course-exemp/backend
+            git pull origin master  # Fetch latest changes
+            npm install           # Install dependencies (if applicable)
+            node server.js    # Restart the server (use 'node server.js' if not using PM2)
+          EOF
