@@ -3,7 +3,7 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - master  # Change this to your production branch name
+      - master 
   workflow_dispatch:
 jobs:
   deploy:
