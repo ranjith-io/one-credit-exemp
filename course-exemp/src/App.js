@@ -17,9 +17,7 @@ function App() {
     setIsAuthenticated(true);
     setIsAdmin(isAdminUser);
     setName(name);
-    // console.log('isAdmin:',isAdminUser);
-    // console.log('email:',d_email);
-    // setName(response.profileObj.name);
+    
     if (isAdminUser) {
       navigate('/main');
     }
@@ -47,9 +45,18 @@ function App() {
         element={isAuthenticated ? <StartPage Name={name} /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}
       />
       
-      <Route path="/registration" element={<RegistrationPage />} />
-      <Route path="/details" element={<RegisDetails />} />
-      <Route path='/admin' element={<AdminPage/>}/>
+      <Route 
+      path="/registration" 
+      element={isAuthenticated ? <RegistrationPage /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}      
+      />
+      <Route 
+      path="/details" 
+      element={isAuthenticated && isAdmin ? <RegisDetails /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}      
+      />
+      <Route 
+      path="/admin" 
+      element={isAuthenticated && isAdmin ? <AdminPage  /> : <AuthPage onLoginSuccess={handleLoginSuccess} onLoginFailure={handleLoginFailure} />}      
+      />
     </Routes>
   );
 }
