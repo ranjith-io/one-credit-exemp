@@ -3,11 +3,8 @@ name: Deploy to EC2
 on:
   push:
     branches:
-<<<<<<< HEAD
       - master 
-=======
       - master  
->>>>>>> 50ece5b (updated)
   workflow_dispatch:
 jobs:
   deploy:
